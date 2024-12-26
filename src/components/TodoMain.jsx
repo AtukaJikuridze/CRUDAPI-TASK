@@ -2,13 +2,22 @@ import React, { useState, useEffect } from "react";
 import TodoSubmit from "./TodoSubmit";
 import TodoElement from "./TodoElement";
 
-const TodoMain = () => {
+const TodoMain = ({ setEditActive }) => {
   const [todoList, setTodoList] = useState([]);
   const BASE_KEY = "6q1jjDKgbJ3Ps9yX4gpMZKjlD_VbaZoILTb07gwOVgG7RXKg1g";
   const [isLoaded, setIsLoaded] = useState(false);
   const [isAdded, setIsAdded] = useState(null);
+  console.log(todoList);
 
+  useEffect(() => {
+    fetchTodoList();
+  }, []);
 
+  const editTodo = (id, title, isCompleted) => {
+    console.log(id, title, isCompleted);
+
+    setEditActive(true);
+  };
   const fetchTodoList = () => {
     setIsLoaded(false);
     fetch("/api/v1/todo", {
@@ -30,6 +39,7 @@ const TodoMain = () => {
           uuid: item._uuid,
           id: item.id,
           key: item._uuid,
+          isCompleted: item.isCompleted,
         }));
         setTodoList(filteredData);
       })
@@ -37,13 +47,7 @@ const TodoMain = () => {
       .finally(() => setIsLoaded(true));
   };
 
-
-  useEffect(() => {
-    fetchTodoList();
-  }, []);
-
-
-  const submitTodo = (inputValue) => {
+  const submitTodo = (inputValue, isCompleted) => {
     if (inputValue.length === 0) return;
     setIsAdded(false);
 
@@ -56,23 +60,24 @@ const TodoMain = () => {
       body: JSON.stringify([
         {
           title: inputValue,
+          isCompleted: isCompleted,
         },
       ]),
     })
       .then((response) => {
         setIsAdded(true);
+
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
+
         return response.json();
       })
       .then(() => {
-        
         fetchTodoList();
       })
       .catch((error) => console.error("Error:", error));
   };
-
 
   const deleteTodo = (uuid) => {
     fetch(`/api/v1/todo/${uuid}`, {
@@ -100,10 +105,13 @@ const TodoMain = () => {
           <div className="todo-list">
             {todoList.map((e) => (
               <TodoElement
-                title={e.title}
                 key={e.uuid}
+                title={e.title}
                 uuid={e.uuid}
+                isCompleted={e.isCompleted}
                 deleteTodo={() => deleteTodo(e.uuid)}
+                setEditActive={setEditActive}
+                editTodo={editTodo}
               />
             ))}
           </div>
