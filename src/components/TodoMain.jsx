@@ -8,7 +8,7 @@ const TodoMain = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isAdded, setIsAdded] = useState(null);
 
-  // Function to fetch the todo list
+
   const fetchTodoList = () => {
     setIsLoaded(false);
     fetch("/api/v1/todo", {
@@ -37,12 +37,12 @@ const TodoMain = () => {
       .finally(() => setIsLoaded(true));
   };
 
-  // Fetch todo list when component is mounted
+
   useEffect(() => {
     fetchTodoList();
   }, []);
 
-  // Submit a new todo
+
   const submitTodo = (inputValue) => {
     if (inputValue.length === 0) return;
     setIsAdded(false);
@@ -67,13 +67,13 @@ const TodoMain = () => {
         return response.json();
       })
       .then(() => {
-        // After adding a new todo, re-fetch the todo list
+        
         fetchTodoList();
       })
       .catch((error) => console.error("Error:", error));
   };
 
-  // Delete a todo
+
   const deleteTodo = (uuid) => {
     fetch(`/api/v1/todo/${uuid}`, {
       method: "DELETE",
@@ -86,7 +86,7 @@ const TodoMain = () => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        // After deletion, re-fetch the todo list
+
         fetchTodoList();
       })
       .catch((error) => console.error("Error:", error));
