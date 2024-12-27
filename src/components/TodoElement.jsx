@@ -1,7 +1,5 @@
 import { FaRegTrashAlt, FaEdit } from "react-icons/fa";
 const TodoElement = ({ title, uuid, isCompleted, deleteTodo, editTodo }) => {
-  console.log(isCompleted);
-
   return (
     <div className="todo-el">
       <p
@@ -11,7 +9,10 @@ const TodoElement = ({ title, uuid, isCompleted, deleteTodo, editTodo }) => {
         {isCompleted == true ? "Completed" : "Not Completed"}
       </p>
       <p>{title}</p>
-      <FaEdit onClick={() => editTodo(uuid,title,isCompleted)} className="edit" />
+      <FaEdit
+        onClick={() => editTodo(uuid, title, isCompleted)}
+        className="edit"
+      />
       <FaRegTrashAlt onClick={() => deleteTodo(uuid)} className="delete" />
     </div>
   );

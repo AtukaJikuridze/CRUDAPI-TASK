@@ -1,55 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import TodoSubmit from "./TodoSubmit";
 import TodoElement from "./TodoElement";
 
-const TodoMain = ({ setEditActive }) => {
-  const [todoList, setTodoList] = useState([]);
-  const BASE_KEY = "6q1jjDKgbJ3Ps9yX4gpMZKjlD_VbaZoILTb07gwOVgG7RXKg1g";
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [isAdded, setIsAdded] = useState(null);
-  console.log(todoList);
-
-  useEffect(() => {
-    fetchTodoList();
-  }, []);
-
-  const editTodo = (id, title, isCompleted) => {
-    console.log(id, title, isCompleted);
-
-    setEditActive(true);
-  };
-  const fetchTodoList = () => {
-    setIsLoaded(false);
-    fetch("/api/v1/todo", {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${BASE_KEY}`,
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        const filteredData = data.items.map((item) => ({
-          title: item.title,
-          uuid: item._uuid,
-          id: item.id,
-          key: item._uuid,
-          isCompleted: item.isCompleted,
-        }));
-        setTodoList(filteredData);
-      })
-      .catch((error) => console.error("Error:", error))
-      .finally(() => setIsLoaded(true));
-  };
-
+const TodoMain = ({
+  setEditActive,
+  setEditInfo,
+  todoList,
+  fetchTodoList,
+  isLoaded,
+  BASE_KEY,
+}) => {
   const submitTodo = (inputValue, isCompleted) => {
     if (inputValue.length === 0) return;
-    setIsAdded(false);
 
     fetch("/api/v1/todo", {
       method: "POST",
@@ -65,12 +27,9 @@ const TodoMain = ({ setEditActive }) => {
       ]),
     })
       .then((response) => {
-        setIsAdded(true);
-
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-
         return response.json();
       })
       .then(() => {
@@ -91,7 +50,6 @@ const TodoMain = ({ setEditActive }) => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-
         fetchTodoList();
       })
       .catch((error) => console.error("Error:", error));
@@ -101,7 +59,7 @@ const TodoMain = ({ setEditActive }) => {
     <div className="todo-main">
       {isLoaded ? (
         <div className="todo-content">
-          <TodoSubmit submitTodo={submitTodo} isAdded={isAdded} />
+          <TodoSubmit submitTodo={submitTodo} />
           <div className="todo-list">
             {todoList.map((e) => (
               <TodoElement
@@ -111,7 +69,10 @@ const TodoMain = ({ setEditActive }) => {
                 isCompleted={e.isCompleted}
                 deleteTodo={() => deleteTodo(e.uuid)}
                 setEditActive={setEditActive}
-                editTodo={editTodo}
+                editTodo={(id, title, isCompleted) => {
+                  setEditInfo({ id, title, isCompleted });
+                  setEditActive(true);
+                }}
               />
             ))}
           </div>
