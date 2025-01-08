@@ -1,0 +1,108 @@
+.todo-main {
+  padding: 50px 0px;
+}
+.todo-main a {
+  text-decoration: none;
+}
+.todo-main button {
+  display: block;
+  align-items: center;
+  background-clip: padding-box;
+  background-color: #fa6400;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: block;
+  font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  justify-content: center;
+  line-height: 1.25;
+  margin: auto;
+  min-height: 3rem;
+  padding: calc(0.875rem - 1px) calc(1.5rem - 1px);
+  text-decoration: none;
+  transition: all 250ms;
+  -moz-user-select: none;
+       user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 400px;
+}
+.todo-main button:hover, .todo-main button:focus {
+  background-color: #fb8332;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+}
+.todo-main button:hover {
+  transform: translateY(-1px);
+}
+.todo-main button:active {
+  background-color: #c85000;
+  box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+  transform: translateY(0);
+}
+.todo-main .list {
+  padding: 100px 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+}
+.todo-main .list .task {
+  width: 600px;
+  background-color: white;
+  padding: 40px;
+  border-radius: 10px;
+  position: relative;
+  overflow: scroll;
+  height: 220px;
+}
+.todo-main .list .task::-webkit-scrollbar {
+  width: 0px;
+}
+.todo-main .list .task .complete-status {
+  position: absolute;
+  left: 50%;
+  top: 10px;
+  transform: translateX(-50%);
+}
+.todo-main .list .task .delete {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  padding: 2px 6px;
+  cursor: pointer;
+  font-size: 12px;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  transition: 0.3s;
+  background-color: #fff;
+  border: 1px solid red;
+  color: red;
+}
+.todo-main .list .task .delete:hover {
+  background-color: red;
+  color: #fff;
+}
+.todo-main .list .task .date {
+  position: absolute;
+  left: 9px;
+  top: 10px;
+}
+.todo-main .list .task .user-name {
+  border-top: 1px solid grey;
+  border-bottom: 1px solid grey;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  font-size: 20px;
+  padding: 15px 0px;
+}
+.todo-main .list .task .title {
+  text-align: center;
+  padding: 20px 0px;
+  word-break: break-all;
+}/*# sourceMappingURL=TodoMain.css.map */
