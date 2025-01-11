@@ -1,5 +1,7 @@
 import React, { useContext } from "react";
+import { Link } from "react-router";
 import { MyContext } from "../../Context/Context";
+import { FaEdit } from "react-icons/fa";
 
 const TodoElement = ({
   completeStatus,
@@ -8,6 +10,7 @@ const TodoElement = ({
   date,
   title,
   uuid,
+  isCompleted,
 }) => {
   const context = useContext(MyContext);
 
@@ -35,6 +38,16 @@ const TodoElement = ({
         context.setIsLoaded(false);
       });
   };
+  const setEditInfo = () => {
+    context.setEditInfo({
+      title,
+      firstName,
+      lastName,
+      date,
+      uuid,
+      isCompleted,
+    });
+  };
 
   return (
     <div className="task">
@@ -52,6 +65,9 @@ const TodoElement = ({
         <p>{lastName}</p>
       </div>
       <p className="title">{title}</p>
+      <Link to={"/EditTask"} className="edit" onClick={setEditInfo}>
+        <FaEdit />
+      </Link>
     </div>
   );
 };

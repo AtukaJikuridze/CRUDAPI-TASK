@@ -23,10 +23,10 @@ const CreateTask = () => {
       dateRef.current.value,
     ];
 
-    // if (fields.some((value) => !value)) {
-    //   alert("Please fill in all the fields.");
-    //   return;
-    // }
+    if (fields.some((value) => !value)) {
+      alert("Please fill in all the fields.");
+      return;
+    }
 
     const newTask = {
       firstName: firstNameRef.current.value,

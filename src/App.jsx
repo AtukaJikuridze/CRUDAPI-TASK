@@ -1,7 +1,7 @@
 import "./App.css";
-import EditTask from "./Pages/EditTask/EditTask";
-import TodoMain from "./Pages/TodoMain/TodoMain";
-import CreateTask from "./Pages/CreateTask/CreateTask";
+import EditTask from "./pages/EditTask/EditTask";
+import TodoMain from "./pages/TodoMain/TodoMain";
+import CreateTask from "./pages/CreateTask/CreateTask";
 import { Route, Routes } from "react-router";
 import { useContext, useEffect } from "react";
 import { MyContext } from "./Context/Context";
@@ -11,7 +11,6 @@ function App() {
   useEffect(() => {
     context.fetchTodoList();
   }, []);
-  console.log(context.todoList);
 
   return (
     <div className="App">

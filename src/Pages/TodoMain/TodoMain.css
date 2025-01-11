@@ -82,10 +82,22 @@
   background-color: #fff;
   border: 1px solid red;
   color: red;
+  text-align: center;
 }
 .todo-main .list .task .delete:hover {
   background-color: red;
   color: #fff;
+}
+.todo-main .list .task .edit {
+  position: absolute;
+  top: 10px;
+  right: 140px;
+  font-size: 20px;
+  color: gray;
+  transition: 0.1s;
+}
+.todo-main .list .task .edit:hover {
+  font-size: 22px;
 }
 .todo-main .list .task .date {
   position: absolute;

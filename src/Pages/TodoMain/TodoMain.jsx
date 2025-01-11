@@ -1,9 +1,9 @@
-import TodoElement from "./TodoElement";
 import "./TodoMain.css";
 import { MyContext } from "../../Context/Context";
 import { useContext, useEffect, useState } from "react";
+import TodoElement from "./TodoElement";
 import { Link } from "react-router";
-import { Circles } from "react-loader-spinner"; // Import the loader
+import { Circles } from "react-loader-spinner";
 const TodoMain = () => {
   const context = useContext(MyContext);
   const [todoList, setTodoList] = useState([]);
@@ -21,9 +21,6 @@ const TodoMain = () => {
       setTodoList([]);
     }
   }, [context.todoList]);
-  console.log(todoList);
-
-  console.log(todoList);
 
   return (
     <div className="todo-main">
@@ -42,6 +39,7 @@ const TodoMain = () => {
                 completeStatus={e.isCompleted}
                 title={e.title}
                 uuid={e.uuid}
+                isCompleted={e.isCompleted}
               />
             ))
           ) : (
