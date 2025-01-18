@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import TodoElement from "./TodoElement";
 import { Link } from "react-router";
 import { Circles } from "react-loader-spinner";
+import LanguageFilter from "../../LanguageFilter";
 const TodoMain = () => {
   const context = useContext(MyContext);
   const [todoList, setTodoList] = useState([]);
@@ -25,7 +26,14 @@ const TodoMain = () => {
   return (
     <div className="todo-main">
       <Link to={"/CreateTask"}>
-        <button>Create Task!</button>
+        <button>
+          {
+            <LanguageFilter
+              english={"Create Task"}
+              georgian={"შექმენი დავალება"}
+            />
+          }
+        </button>
       </Link>
       <div className="list">
         {context.isLoaded ? (
@@ -43,7 +51,14 @@ const TodoMain = () => {
               />
             ))
           ) : (
-            <h1 style={{ color: "white" }}>Todo List is Empty...</h1>
+            <h1 style={{ color: "white" }}>
+              {
+                <LanguageFilter
+                  english={"Todo List is Empty..."}
+                  georgian={"სია ცარიელია..."}
+                />
+              }
+            </h1>
           )
         ) : (
           <Circles color="white" />

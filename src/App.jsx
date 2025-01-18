@@ -5,15 +5,18 @@ import CreateTask from "./pages/CreateTask/CreateTask";
 import { Route, Routes } from "react-router";
 import { useContext, useEffect } from "react";
 import { MyContext } from "./Context/Context";
+import Navbar from "./Navbar";
 
 function App() {
-  const context = useContext(MyContext);
+  const {fetchTodoList} = useContext(MyContext);
   useEffect(() => {
-    context.fetchTodoList();
+    fetchTodoList();
   }, []);
 
   return (
     <div className="App">
+      <Navbar/>
+    
       <Routes>
         <Route element={<TodoMain />} path="/" />
         <Route element={<TodoMain />} path="/TodoList" />

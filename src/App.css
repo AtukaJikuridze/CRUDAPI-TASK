@@ -12,4 +12,36 @@
 .App {
   background-color: #242424;
   min-height: 100vh;
+}
+
+nav {
+  background-color: #fff;
+}
+nav .nav-container {
+  max-width: 80%;
+  margin: auto;
+  padding: 20px 0px;
+}
+nav .nav-container .nav-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+nav .nav-container .nav-flex .language {
+  border: 1px solid black;
+}
+nav .nav-container .nav-flex .language select {
+  width: 80px;
+  text-align: center;
+  outline: none;
+  border: 0px;
+  height: 34px;
+}
+nav .nav-container .nav-flex ul {
+  display: flex;
+  list-style-type: none;
+  gap: 20px;
+}
+nav .nav-container .nav-flex ul li a {
+  color: black;
 }/*# sourceMappingURL=App.css.map */

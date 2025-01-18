@@ -10,6 +10,7 @@ export const MyContextProvider = ({ children }) => {
   const [editActive, setEditActive] = useState(false);
   const [todoList, setTodoList] = useState("");
   const [isLoaded, setIsLoaded] = useState(false);
+  const [language, setLanguage] = useState("EN");
   const fetchTodoList = () => {
     setIsLoaded(false);
     fetch("/api/v1/todo", {
@@ -55,6 +56,8 @@ export const MyContextProvider = ({ children }) => {
         setTodoList,
         setIsLoaded,
         isLoaded,
+        language,
+        setLanguage,
       }}
     >
       {children}

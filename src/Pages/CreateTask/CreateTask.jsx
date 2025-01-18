@@ -1,41 +1,46 @@
-import React, { useContext, useRef } from "react";
+import React, { useState, useContext } from "react";
 import "./CreateTask.css";
 import { Link, useNavigate } from "react-router";
 import { MyContext } from "../../Context/Context";
+import LanguageFilter from "../../LanguageFilter";
+import LocalizedInput from "./LocalizedInput";
 
 const CreateTask = () => {
   const context = useContext(MyContext);
   const navigate = useNavigate();
 
-  const titleRef = useRef(null);
-  const firstNameRef = useRef(null);
-  const lastNameRef = useRef(null);
-  const completedRef = useRef(null);
-  const dateRef = useRef(null);
+  // State for form data
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    title: "",
+    completed: "no",
+    date: "",
+  });
+
+  // Handle input changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
   const submitForm = (e) => {
     e.preventDefault();
 
-    const fields = [
-      completedRef.current.value,
-      firstNameRef.current.value,
-      lastNameRef.current.value,
-      titleRef.current.value,
-      dateRef.current.value,
-    ];
-
-    if (fields.some((value) => !value)) {
+    // Check if all fields are filled
+    const allFieldsFilled = Object.values(formData).every((value) => value);
+    if (!allFieldsFilled) {
       alert("Please fill in all the fields.");
       return;
     }
 
+    // Prepare new task object
     const newTask = {
-      firstName: firstNameRef.current.value,
-      lastName: lastNameRef.current.value,
-      title: titleRef.current.value,
-      date: dateRef.current.value,
-      completed: completedRef.current.value === "yes",
+      ...formData,
+      completed: formData.completed === "yes",
     };
 
+    // Post the new task to the API
     fetch("/api/v1/todo", {
       method: "POST",
       headers: {
@@ -61,35 +66,87 @@ const CreateTask = () => {
     <div className="create-task">
       <div className="create-box">
         <Link to={"/TodoList"}>
-          <h1>Back To TodoList</h1>
+          <h1>
+            <LanguageFilter
+              english={"Back to todo List.."}
+              georgian={"დაბრუნდი საწყის გვერძე"}
+            />
+          </h1>
         </Link>
-        <h2>Create Todo</h2>
+        <h2>
+          <LanguageFilter
+            english={"Create Todo"}
+            georgian={"დავალების შექმნა"}
+          />
+        </h2>
         <form onSubmit={submitForm}>
           <label>
-            <input
+            <LocalizedInput
+              name="firstName"
+              value={formData.firstName}
+              onChange={handleChange}
+              english="Enter First Name"
+              georgian="შეიყვანეთ სახელი"
               type="text"
-              placeholder="Enter First Name"
-              ref={firstNameRef}
             />
-            <input
+            <LocalizedInput
+              name="lastName"
+              value={formData.lastName}
+              onChange={handleChange}
+              english="Enter Last Name"
+              georgian="შეიყვანეთ გვარი"
               type="text"
-              placeholder="Enter Last Name"
-              ref={lastNameRef}
             />
           </label>
-          <input type="text" placeholder="Enter Title" ref={titleRef} />
+          <LocalizedInput
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+            english="Enter Title"
+            georgian="შეიყვანეთ სათაური"
+            type="text"
+          />
           <div className="select-flex-create">
-            <h3>Is Completed?</h3>
-            <select ref={completedRef}>
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
+            <h3>
+              <LanguageFilter
+                english={"Is Completed?"}
+                georgian={"შესრულებულია?"}
+              />
+            </h3>
+            <select
+              name="completed"
+              value={formData.completed}
+              onChange={handleChange}
+            >
+              <option value="yes">
+                <LanguageFilter english={"Yes"} georgian={"კი"} />
+              </option>
+              <option value="no">
+                <LanguageFilter english={"No"} georgian={"არა"} />
+              </option>
             </select>
           </div>
           <div className="date-picker">
-            <h3>Choose a Date</h3>
-            <input type="date" ref={dateRef} />
+            <h3>
+              <LanguageFilter
+                english={"Choose a Date"}
+                georgian={"აირჩიეთ ვადა"}
+              />
+            </h3>
+            <input
+              type="date"
+              name="date"
+              value={formData.date}
+              onChange={handleChange}
+            />
           </div>
-          <input type="submit" value={"Submit Data"} />
+
+          <button type="submit">
+            <LanguageFilter
+              english={"Submit Data"}
+              georgian={"დავალების შექმნა"}
+            />
+          </button>
         </form>
       </div>
     </div>

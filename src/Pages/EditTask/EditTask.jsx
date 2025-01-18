@@ -1,12 +1,13 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { MyContext } from "../../Context/Context";
+import LanguageFilter from "../../LanguageFilter";
+import LocalizedInput from "../CreateTask/LocalizedInput";
 
 const EditTask = () => {
   const navigate = useNavigate();
   const context = useContext(MyContext);
 
-  // Format the date to "yyyy-MM-dd" format
   const formatDate = (dateString) => {
     if (!dateString) return "";
     const date = new Date(dateString);
@@ -61,49 +62,86 @@ const EditTask = () => {
     <div className="create-task">
       <div className="create-box">
         <Link to={"/TodoList"}>
-          <h1>Back To TodoList</h1>
+          <h1>
+            <LanguageFilter
+              english={"Back to todo List.."}
+              georgian={"დაბრუნდი საწყის გვერძე"}
+            />
+          </h1>
         </Link>
-        <h2>Edit Todo</h2>
+        <h2>
+          <LanguageFilter
+            english={"Create Todo"}
+            georgian={"დავალების შექმნა"}
+          />
+        </h2>
         <form onSubmit={editForm}>
           <label>
-            <input
+            <LocalizedInput
+              english="Enter First Name"
+              georgian="შეიყვანეთ სახელი"
               type="text"
-              placeholder="Enter First Name"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
             />
-            <input
+            <LocalizedInput
+              english="Enter Last Name"
+              georgian="შეიყვანეთ გვარი"
               type="text"
-              placeholder="Enter Last Name"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
             />
           </label>
-          <input
+          <LocalizedInput
+            name="title"
+            english="Enter Title"
+            georgian="შეიყვანეთ სათაური"
             type="text"
-            placeholder="Enter Title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
           <div className="select-flex-create">
-            <h3>Is Completed?</h3>
+            <h3>
+              <LanguageFilter
+                english={"Is Completed?"}
+                georgian={"შესრულებულია?"}
+              />
+            </h3>
             <select
               value={isCompleted ? "Yes" : "No"}
               onChange={(e) => setIsCompleted(e.target.value === "Yes")}
             >
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
+              <option
+                value={isCompleted ? "Yes" : "No"}
+                onChange={(e) => setIsCompleted(e.target.value === "Yes")}
+              >
+                <LanguageFilter english={"Yes"} georgian={"კი"} />
+              </option>
+              <option value="no">
+                <LanguageFilter english={"No"} georgian={"არა"} />
+              </option>
             </select>
           </div>
           <div className="date-picker">
-            <h3>Choose a Date</h3>
+            <h3>
+              <LanguageFilter
+                english={"Choose a Date"}
+                georgian={"აირჩიეთ ვადა"}
+              />
+            </h3>
             <input
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
             />
           </div>
-          <input type="submit" value={"Submit Data"} />
+
+          <button type="submit">
+            <LanguageFilter
+              english={"Submit Data"}
+              georgian={"დავალების შექმნა"}
+            />
+          </button>
         </form>
       </div>
     </div>

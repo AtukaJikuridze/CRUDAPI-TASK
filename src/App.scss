@@ -12,3 +12,35 @@
   background-color: #242424;
   min-height: 100vh;
 }
+
+nav {
+  background-color: #fff;
+  .nav-container {
+    max-width: 80%;
+    margin: auto;
+    padding: 20px 0px;
+    .nav-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .language {
+        border: 1px solid black;
+        select {
+          width: 80px;
+          text-align: center;
+          outline: none;
+          border: 0px;
+          height: 34px;
+        }
+      }
+      ul {
+        display: flex;
+        list-style-type: none;
+        gap: 20px;
+        li a {
+          color: black;
+        }
+      }
+    }
+  }
+}

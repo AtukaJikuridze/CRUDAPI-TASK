@@ -44,6 +44,8 @@
   transform: translateX(-50%);
   text-decoration: underline;
   color: #fff;
+  width: 100%;
+  text-align: center;
 }
 .create-task .create-box label {
   display: flex;
@@ -69,7 +71,7 @@
   justify-content: center;
   align-items: center;
 }
-.create-task .create-box form input[type=submit] {
+.create-task .create-box form button {
   height: 50px;
   border-radius: 10px;
   padding: 0px 10px;

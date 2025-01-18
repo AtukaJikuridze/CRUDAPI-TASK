@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router";
 import { MyContext } from "../../Context/Context";
 import { FaEdit } from "react-icons/fa";
+import LanguageFilter from "../../LanguageFilter";
 
 const TodoElement = ({
   completeStatus,
@@ -53,12 +54,19 @@ const TodoElement = ({
     <div className="task">
       <div className="complete-status">
         <p style={{ color: completeStatus ? "limegreen" : "red" }}>
-          {completeStatus ? "Completed" : "Not Completed"}
+          {completeStatus ? (
+            <LanguageFilter english={"Completed"} georgian={"შესრულებულია"} />
+          ) : (
+            <LanguageFilter
+              english={"Not Completed"}
+              georgian={"არ არის შესრულებული"}
+            />
+          )}
         </p>
       </div>
       <div className="date">{date}</div>
       <div className="delete" onClick={deleteTask}>
-        Delete Task
+        <LanguageFilter english={"Delete Task"} georgian={"წაშლა"} />
       </div>
       <div className="user-name">
         <p>{firstName}</p>
