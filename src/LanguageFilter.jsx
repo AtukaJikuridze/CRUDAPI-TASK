@@ -3,7 +3,7 @@ import { MyContext } from "./Context/Context";
 
 const LanguageFilter = ({ english, georgian }) => {
   const { language } = useContext(MyContext);
-  return language === "EN" ? <>{english}</> : <>{georgian}</>;
+  return <>{language === "EN" ? english : georgian}</>;
 };
 
 export default LanguageFilter;

@@ -1,16 +1,14 @@
 import { createContext, useState } from "react";
 
-// Create the context
 export const MyContext = createContext();
 
-// Create the provider component
 export const MyContextProvider = ({ children }) => {
-  const BASE_KEY = "6q1jjDKgbJ3Ps9yX4gpMZKjlD_VbaZoILTb07gwOVgG7RXKg1g";
+  const BASE_KEY = "i_c2-xirJlF7OYPC8DM8qdHVXhi7Oej6CZUs5uQGV4XWYhqAAA";
   const [editInfo, setEditInfo] = useState({});
-  const [editActive, setEditActive] = useState(false);
-  const [todoList, setTodoList] = useState("");
+  const [todoList, setTodoList] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [language, setLanguage] = useState("EN");
+
   const fetchTodoList = () => {
     setIsLoaded(false);
     fetch("/api/v1/todo", {
@@ -21,25 +19,19 @@ export const MyContextProvider = ({ children }) => {
       },
     })
       .then((response) => {
-        if (!response.ok) {
+        if (!response.ok)
           throw new Error(`HTTP error! Status: ${response.status}`);
-        }
         return response.json();
       })
       .then((data) => {
-        const filteredData = data.items.map((item) => ({
-          title: item.title,
-          firstName: item.firstName,
-          lastName: item.lastName,
-          date: item.date,
-          uuid: item._uuid,
-          id: item.id,
-          key: item._uuid,
+        const formattedData = data.items.map((item) => ({
+          ...item,
           isCompleted: item.completed,
+          key: item._uuid,
         }));
-        setTodoList(JSON.stringify(filteredData));
+        setTodoList(formattedData);
       })
-      .catch((error) => console.error("Error:", error))
+      .catch((error) => console.error("Error fetching todos:", error))
       .finally(() => setIsLoaded(true));
   };
 
@@ -49,13 +41,11 @@ export const MyContextProvider = ({ children }) => {
         BASE_KEY,
         editInfo,
         setEditInfo,
-        setEditActive,
-        editActive,
         fetchTodoList,
         todoList,
         setTodoList,
-        setIsLoaded,
         isLoaded,
+        setIsLoaded,
         language,
         setLanguage,
       }}

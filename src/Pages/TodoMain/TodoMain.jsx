@@ -1,63 +1,48 @@
-import "./TodoMain.css";
-import { MyContext } from "../../Context/Context";
-import { useContext, useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchTodos } from "../../redux/todoSlice";
 import TodoElement from "./TodoElement";
 import { Link } from "react-router";
 import { Circles } from "react-loader-spinner";
 import LanguageFilter from "../../LanguageFilter";
+import "./TodoMain.css";
+
 const TodoMain = () => {
-  const context = useContext(MyContext);
-  const [todoList, setTodoList] = useState([]);
+  const dispatch = useDispatch();
+  const { todoList, isLoaded } = useSelector((state) => state.todo);
 
   useEffect(() => {
-    if (
-      typeof context.todoList === "string" &&
-      context.todoList.trim().startsWith("[")
-    ) {
-      const parsedList = JSON.parse(context.todoList);
-      setTodoList(parsedList);
-    } else if (Array.isArray(context.todoList)) {
-      setTodoList(context.todoList);
-    } else {
-      setTodoList([]);
-    }
-  }, [context.todoList]);
+    dispatch(fetchTodos());
+  }, [dispatch]);
 
   return (
     <div className="todo-main">
-      <Link to={"/CreateTask"}>
+      <Link to="/CreateTask">
         <button>
-          {
-            <LanguageFilter
-              english={"Create Task"}
-              georgian={"შექმენი დავალება"}
-            />
-          }
+          <LanguageFilter english="Create Task" georgian="შექმენი დავალება" />
         </button>
       </Link>
       <div className="list">
-        {context.isLoaded ? (
+        {isLoaded ? (
           todoList.length ? (
-            todoList.map((e) => (
+            todoList.map((todo) => (
               <TodoElement
-                key={Math.random()}
-                firstName={e.firstName}
-                lastName={e.lastName}
-                date={e.date}
-                completeStatus={e.isCompleted}
-                title={e.title}
-                uuid={e.uuid}
-                isCompleted={e.isCompleted}
+                key={todo.uuid}
+                title={todo.title}
+                firstName={todo.firstName}
+                lastName={todo.lastName}
+                date={todo.date}
+                uuid={todo.uuid}
+                id={todo.id}
+                completeStatus={todo.isCompleted}
               />
             ))
           ) : (
             <h1 style={{ color: "white" }}>
-              {
-                <LanguageFilter
-                  english={"Todo List is Empty..."}
-                  georgian={"სია ცარიელია..."}
-                />
-              }
+              <LanguageFilter
+                english="Todo List is Empty..."
+                georgian="სია ცარიელია..."
+              />
             </h1>
           )
         ) : (

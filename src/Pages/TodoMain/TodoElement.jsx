@@ -16,7 +16,9 @@ const TodoElement = ({
   const context = useContext(MyContext);
 
   const deleteTask = () => {
-    context.fetchTodoList();
+    context.setTodoList((prevList) =>
+      prevList.filter((todo) => todo.uuid !== uuid)
+    );
 
     fetch(`/api/v1/todo/${uuid}`, {
       method: "DELETE",
@@ -29,11 +31,11 @@ const TodoElement = ({
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-
-        context.fetchTodoList();
+        window.location.reload();
       })
       .catch((error) => {
         console.error("Error:", error);
+        context.fetchTodoList();
       })
       .finally(() => {
         context.setIsLoaded(false);
